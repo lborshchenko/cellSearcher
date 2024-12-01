@@ -18,13 +18,14 @@ body {
     font-size: 2rem;
     border-bottom: 1px solid gainsboro;
     margin-bottom: 1rem;
+    padding-left: 1rem;
+    padding-top: 0.3rem;
 }
 
 .searchResults {
     border: 1px solid black;
     width: 100%;
     text-align: left;
-    padding: 1rem;
 }
 
 .searchResults span {
