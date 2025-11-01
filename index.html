@@ -1,22 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ШК ячейки</title>
-    <script src="app.js" defer type="module"></script>
-    <link rel="stylesheet" href="styles.css">
-    <script src="JsBarcode.all.min.js" type="module"></script>
+    <title>Система управления складом</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #2c3e50;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+        
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .nav-item {
+            margin: 1.5rem 0;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #5e6fd8 0%, #6a4ba5 100%);
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .nav-link {
+                padding: 1.25rem 1.75rem;
+                font-size: 1rem;
+            }
+        }
+
+
+        
+    </style>
 </head>
 <body>
-    <input type="text" class="searchArea" placeholder="Имя ячейки: (например: б1.1а)">
-    <div class="searchResults" hidden>
+    <div class="container">
+        
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="cellsearcher.html" class="nav-link">
+                    <i class="fas fa-search icon"></i>
+                    Поиск по штрихкодам
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="table.html" class="nav-link">
+                    <i class="fas fa-boxes icon"></i>
+                    Товар в запасе
+                </a>
+            </li>
+
+            <a href="https://docs.google.com/spreadsheets/d/1iNrF1kkSUrP5xi84KZiUf_6miezk3db5OcYfkRxw8yI/edit?gid=0#gid=0">Редактировать остатки</a>
+        </ul>
     </div>
-    <div class="cellArea">
-
-    </div>
-    <img id="barcode"/>
-
-
-    </body>
+</body>
 </html>

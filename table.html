@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Table</title>
+    
+      <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+        }
+        .error {
+            color: red;
+            padding: 10px;
+            background-color: #ffe6e6;
+            border: 1px solid red;
+        }
+        .update-info {
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Остатки товара</h1>
+    
+    <div class="update-info">
+        Последнее обновление: <span id="lastUpdate">-</span>
+        <button onclick="loadData()">Обновить данные</button>
+    </div>
+
+    <div class="container">
+        <div id="loading" class="loading">Загрузка данных...</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="dataContainer"></div>
+    </div>
+
+    <script>
+        // Замените этот URL на ваш Sheetsu API URL
+        const SHEETSU_API_URL = 'https://sheetdb.io/api/v1/10n1610431v3c';
+
+        // Функция для загрузки данных
+        async function loadData() {
+            const loadingElement = document.getElementById('loading');
+            const errorElement = document.getElementById('error');
+            const dataContainer = document.getElementById('dataContainer');
+            
+            // Показываем индикатор загрузки
+            loadingElement.style.display = 'block';
+            errorElement.style.display = 'none';
+            dataContainer.innerHTML = '';
+
+            try {
+                // Делаем запрос к Sheetsu API
+                const response = await fetch(SHEETSU_API_URL);
+                
+                if (!response.ok) {
+                    throw new Error(`Ошибка HTTP: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Скрываем индикатор загрузки
+                loadingElement.style.display = 'none';
+                
+                // Обновляем время последнего обновления
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+                
+                // Отображаем данные
+                displayData(data);
+                
+            } catch (error) {
+                loadingElement.style.display = 'none';
+                errorElement.style.display = 'block';
+                errorElement.textContent = `Ошибка при загрузке данных: ${error.message}`;
+                console.error('Ошибка:', error);
+            }
+        }
+
+        // Функция для отображения данных в таблице
+        function displayData(data) {
+            const container = document.getElementById('dataContainer');
+            
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p>Нет данных для отображения</p>';
+                return;
+            }
+
+            // Получаем заголовки из первого элемента
+            const headers = Object.keys(data[0]);
+            
+            let html = '<table>';
+            
+            // Создаем заголовок таблицы
+            html += '<thead><tr>';
+            headers.forEach(header => {
+                html += `<th>${header}</th>`;
+            });
+            html += '</tr></thead>';
+            
+            // Создаем тело таблицы
+            html += '<tbody>';
+            data.forEach(row => {
+                html += '<tr>';
+                headers.forEach(header => {
+                    html += `<td>${row[header] || ''}</td>`;
+                });
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+            
+            container.innerHTML = html;
+        }
+
+        // Функция для автоматического обновления данных
+        function startAutoRefresh(intervalMinutes = 5) {
+            setInterval(loadData, intervalMinutes * 60 * 1000);
+        }
+
+        // Загружаем данные при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            // Запускаем автоматическое обновление каждые 5 минут
+            startAutoRefresh(5);
+        });
+    </script>
+</body>
+</html>
