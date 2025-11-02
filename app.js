@@ -693,7 +693,7 @@ const Cells = {
     '10а': 12430,
     '10б': 12447,
   },
-  cell_Telega: {
+  cell_elega: {
     name: 'телега ',
     '1': 3322,
     '4': 9164,
@@ -819,6 +819,7 @@ const clickOnCell = (target) => {
     
   }
   }
+
 
 
 
